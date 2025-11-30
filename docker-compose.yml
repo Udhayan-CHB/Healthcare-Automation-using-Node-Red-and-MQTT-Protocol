@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"   # MQTT
+      - "9001:9001"   # Websocket (optional)
+    volumes:
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_config:/mosquitto/config
+  nodered:
+    image: nodered/node-red:latest
+    container_name: nodered
+    restart: unless-stopped
+    ports:
+      - "1880:1880"   # Node-RED UI
+    volumes:
+      - nodered_data:/data
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    restart: unless-stopped
+    ports:
+      - "8086:8086"   # InfluxDB web + API
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=eto
+      - DOCKER_INFLUXDB_INIT_PASSWORD=oneeyedkingken
+      - DOCKER_INFLUXDB_INIT_ORG=my-org
+      - DOCKER_INFLUXDB_INIT_BUCKET=my-bucket
+      - DOCKER_INFLUXDB_INIT_RETENTION=8760h 
+      - DOCKER_INFLUXDB_INIT_RETENTION=0
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"   # Grafana UI
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=eto
+      - GF_SECURITY_ADMIN_PASSWORD=oneeyed
+volumes:
+  influxdb_data:
+  grafana_data:
+  mosquitto_data:
+  mosquitto_config:
+  nodered_data:
