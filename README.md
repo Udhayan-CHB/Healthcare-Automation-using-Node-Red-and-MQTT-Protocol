@@ -115,10 +115,10 @@ Alerts can be sent to:
 
 ## 📁 MQTT Topics Used
 
-hospital/patient1/heartrate
-hospital/patient1/airquality
-hospital/patient1/alert
-hospital/notifications
+- hospital/patient1/heartrate
+- hospital/patient1/airquality
+- hospital/patient1/alert
+- hospital/notifications
 
 ## 💡 Real-World Applications
 
@@ -130,6 +130,3 @@ hospital/notifications
 
 ---
 
-## 📝 License
-
-This project is open-source under the **MIT License**.
